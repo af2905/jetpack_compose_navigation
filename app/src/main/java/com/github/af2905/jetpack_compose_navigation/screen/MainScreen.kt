@@ -16,7 +16,6 @@ fun MainScreen(
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { },
         bottomBar = { BottomNavigationItems(navController = navController) }
     ) { padding ->
         SetupNavigationHost(
