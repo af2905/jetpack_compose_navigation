@@ -2,6 +2,7 @@ package com.github.af2905.jetpack_compose_navigation
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -95,6 +97,51 @@ fun SetupNavigationHost(
             FavoriteScreen()
         }
     }
+}
+
+@Composable
+fun TopBarNavigation(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val bottomNavigationItemRouteList = listOf(HOME_SCREEN, FAVORITE_SCREEN)
+
+    val title = when (currentRoute) {
+        HOME_SCREEN -> stringResource(id = R.string.screen_home_title)
+        FAVORITE_SCREEN -> stringResource(id = R.string.screen_favorite_title)
+        DETAIL_SCREEN -> stringResource(id = R.string.screen_detail_title)
+        else -> ""
+    }
+
+    TopAppBar(
+        modifier = modifier,
+        title = {
+            Text(
+                text = title,
+                color = Color.White
+            )
+        },
+        backgroundColor = colorResource(id = R.color.colorPrimaryDark),
+        navigationIcon =
+        if (navController.previousBackStackEntry != null &&
+            !bottomNavigationItemRouteList.contains(currentRoute)
+        ) {
+            {
+                IconButton(onClick = { navController.navigateUp() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        tint = Color.White,
+                        contentDescription = null
+                    )
+                }
+            }
+        } else {
+            null
+        }
+    )
 }
 
 object Routes {

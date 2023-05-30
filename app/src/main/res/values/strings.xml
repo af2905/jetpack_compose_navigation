@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Jetpack-Compose-Navigation</string>
+    <string name="screen_home_title">Home Screen</string>
+    <string name="screen_favorite_title">Favorite Screen</string>
+    <string name="screen_detail_title">Detail Screen</string>
 </resources>
